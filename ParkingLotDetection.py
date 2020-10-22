@@ -4,7 +4,7 @@ import cv2
 
 class ParkingLotDetection:
     def __init__(self):
-        self.image_name = "Input Images/Empty Parking Lot 10x3 (12).png"
+        self.image_name = "Input Images/Parking Lot 5x3 (6).png"
         self.lot = []
         self.lot_coords = []
         self.image = Image.open(self.image_name)
@@ -18,12 +18,11 @@ class ParkingLotDetection:
     def checkIfEmpty(self, i):
         # Use image filling on each lot
         self.image_fill(i)
-        lot_image = self.lot[i].convert("L")  # Converted to grayscale
-        lot_histogram = lot_image.histogram()  # Get the intensity histogram in form of list
+        lot_histogram = self.lot[i].histogram()  # Get the intensity histogram in form of list
         lot_sum = sum(lot_histogram)  # Finding sum of intensities
         # print("Total pixels - " + str(lot_sum) + "\tNumber of white pixels - " + str(lot_histogram[255]), end="")
         white_pixels = lot_histogram[255]
-        if white_pixels > (lot_sum * 0.92):  # If white pixels are more than 95%
+        if white_pixels > (lot_sum * 0.92):  # If white pixels are more than 92%
             print("\tLot is EMPTY")
             self.numberOfEmptyLots += 1
             self.ifEmpty.append(True)
